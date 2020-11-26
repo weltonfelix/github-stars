@@ -1,38 +1,72 @@
 package io.github.weltonfelix.githubstars
 
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import android.os.Handler
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
+import android.widget.Button
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.toolbar))
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_main)
 
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
-    }
+		val addUserButton: Button = findViewById(R.id.search_user_button)
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
+		addUserButton.setOnClickListener {
+			AddUser(
+				this,
+				addUserButton,
+				"Buscando usuário...",
+				"Usuário não encontrado"
+			)
+		}
+	}
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+	open class AddUser() {
+		constructor(context: Context, button: Button, text: String, failText: String) : this() {
+			button.isEnabled = false
+
+			val snackbar = Snackbar.make(button, text, Snackbar.LENGTH_INDEFINITE)
+
+			snackbar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.primary))
+			snackbar.show()
+
+			search(snackbar, button)
+			val fail_snackbar = Snackbar.make(button, failText, Snackbar.LENGTH_SHORT)
+			fail_snackbar.setAction(
+				"Tentar novamente",
+				SnackBarTryAgainListener(context, button, text, failText)
+			)
+			fail_snackbar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.alert))
+			fail_snackbar.setActionTextColor(Color.WHITE)
+			fail_snackbar.show()
+
+		}
+
+		private fun search(snackbar: Snackbar, button: Button) {
+			Handler().postDelayed({
+				snackbar.dismiss()
+				button.isEnabled = true
+			}, 2000)
+		}
+
+		class SnackBarTryAgainListener(
+			private val context: Context,
+			private val button: Button,
+			private val text: String,
+			private val failText: String
+		) : View.OnClickListener {
+			override fun onClick(v: View) {
+				AddUser(context, button, text, failText)
+			}
+		}
+	}
+
+
 }

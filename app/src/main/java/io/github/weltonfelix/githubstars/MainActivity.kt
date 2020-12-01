@@ -1,4 +1,4 @@
-package io.github.weltonfelix.githubstars
+ package io.github.weltonfelix.githubstars
 
 import android.content.Context
 import android.graphics.Color
@@ -8,25 +8,29 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+ class MainActivity : AppCompatActivity() {
+	 override fun onCreate(savedInstanceState: Bundle?) {
+		 super.onCreate(savedInstanceState)
+		 setContentView(R.layout.activity_main)
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_main)
+		 val addUserButton: Button = findViewById(R.id.search_user_button)
 
-		val addUserButton: Button = findViewById(R.id.search_user_button)
+		 addUserButton.setOnClickListener {
+			 AddUser(
+				 this,
+				 addUserButton,
+				 "Buscando usuário...",
+				 "Usuário não encontrado"
+			 )
+		 }
 
-		addUserButton.setOnClickListener {
-			AddUser(
-				this,
-				addUserButton,
-				"Buscando usuário...",
-				"Usuário não encontrado"
-			)
-		}
-	}
+		 users_list.layoutManager = LinearLayoutManager(this)
+		 users_list.adapter = UserAdapter()
+	 }
 
 	open class AddUser() {
 		constructor(context: Context, button: Button, text: String, failText: String) : this() {

@@ -1,23 +1,23 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.GithubStars" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorOnPrimary">@color/background_light</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
-        <!-- Navigation bar color. -->
-        <item name="android:navigationBarColor">?attr/colorOnPrimary</item>
-        <!-- Customize your theme here. -->
-        <item name="colorAccent">@color/primary</item>
-    </style>
+	<!-- Base application theme. -->
+	<style name="Theme.GithubStars" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+		<!-- Primary brand color. -->
+		<item name="colorPrimary">@color/primary</item>
+		<item name="colorOnPrimary">@color/background_light</item>
+		<!-- Status bar color. -->
+		<item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+		<!-- Navigation bar color. -->
+		<item name="android:navigationBarColor">?attr/colorOnPrimary</item>
+		<!-- Customize your theme here. -->
+		<item name="colorAccent">@color/primary</item>
+	</style>
 
-    <style name="Theme.GithubStars.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
+	<style name="Theme.GithubStars.NoActionBar">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
 
-    <style name="Theme.GithubStars.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+	<style name="Theme.GithubStars.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.GithubStars.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+	<style name="Theme.GithubStars.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

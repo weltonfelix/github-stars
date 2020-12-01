@@ -25,14 +25,17 @@
 	</com.google.android.material.appbar.AppBarLayout>
 
 	<androidx.constraintlayout.widget.ConstraintLayout
+
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:layout_marginTop="?attr/actionBarSize"
 		android:padding="30dp">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/search_user_form"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginBottom="20dp"
 			android:orientation="horizontal"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
@@ -40,22 +43,22 @@
 
 			<com.google.android.material.button.MaterialButton
 				android:id="@+id/search_user_button"
-				app:icon="@drawable/ic_baseline_add_24"
 				style="@style/Widget.MaterialComponents.Button"
-				app:iconPadding="0dp"
-				android:minWidth="0dp"
-				android:insetLeft="0dp"
-				android:insetRight="0dp"
-				android:insetTop="0dp"
-				android:insetBottom="0dp"
-				app:iconGravity="textStart"
-				android:layout_marginStart="10dp"
 				android:layout_width="40dp"
 				android:layout_height="40dp"
-				app:layout_constraintStart_toEndOf="@id/search_user"
+				android:layout_marginStart="10dp"
+				android:insetLeft="0dp"
+				android:insetTop="0dp"
+				android:insetRight="0dp"
+				android:insetBottom="0dp"
+				android:minWidth="0dp"
+				app:icon="@drawable/ic_baseline_add_24"
+				app:iconGravity="textStart"
+				app:iconPadding="0dp"
+				app:layout_constraintBottom_toBottomOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
-				app:layout_constraintBottom_toBottomOf="parent" />
+				app:layout_constraintStart_toEndOf="@id/search_user"
+				app:layout_constraintTop_toTopOf="parent" />
 
 			<com.google.android.material.textfield.TextInputEditText
 				android:id="@+id/search_user"
@@ -76,5 +79,17 @@
 				app:layout_constraintTop_toTopOf="parent" />
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/users_list"
+			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginTop="80dp"
+			android:scrollbars="vertical"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/search_user_form" />
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

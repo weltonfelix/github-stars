@@ -10,13 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
-class UserAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-	private val users: List<User> = listOf(
-		User("Welton", "Bio do perfil do GitHub!", "https://github.com/weltonfelix.png")
-	)
+class UserAdapter(users_list: MutableList<User>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+	private val users: MutableList<User> = users_list
 
 	override fun getItemCount(): Int {
 		return users.size
+	}
+
+	fun update(user: User) {
+		users.add(user)
+		notifyDataSetChanged()
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

@@ -2,6 +2,8 @@
 
 import android.content.Context
 import android.graphics.Color
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -61,30 +63,56 @@ import retrofit2.Response
 			snackbar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.primary))
 			snackbar.show()
 
-			val userResponse = search(usernameData.text.toString(), snackbar, button)
+			if (internetConnection(context)) {
 
-			if (userResponse?.isSuccessful == false) {
-				val failSnackbar = Snackbar.make(button, failText, Snackbar.LENGTH_SHORT)
-				failSnackbar.setAction(
+				val userResponse = search(usernameData.text.toString(), snackbar, button)
+
+				if (userResponse?.isSuccessful == false) {
+					val failSnackbar = Snackbar.make(button, failText, Snackbar.LENGTH_SHORT)
+					failSnackbar.setAction(
+						"Tentar novamente",
+						SnackBarTryAgainListener(context, usernameData, button, text, failText, adapter)
+					)
+					failSnackbar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.alert))
+					failSnackbar.setActionTextColor(Color.WHITE)
+					failSnackbar.show()
+				} else {
+					val user = userResponse?.body()
+					if (user != null) {
+						val newUser = User(user.name, user.bio, user.avatar_url, user.login)
+						adapter.update(newUser)
+						usernameData.setText("")
+
+						val usersList = SaveData(context).users
+
+						usersList.add(newUser)
+
+						SaveData(context).users = usersList
+					}
+				}
+			} else {
+				val noConnectionSnackBar = Snackbar.make(button, "Sem conexão com a internet", Snackbar.LENGTH_SHORT)
+				noConnectionSnackBar.setAction(
 					"Tentar novamente",
 					SnackBarTryAgainListener(context, usernameData, button, text, failText, adapter)
 				)
-				failSnackbar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.alert))
-				failSnackbar.setActionTextColor(Color.WHITE)
-				failSnackbar.show()
-			} else {
-				val user = userResponse?.body()
-				if (user != null) {
-					val newUser = User(user.name, user.bio, user.avatar_url, user.login)
-					adapter.update(newUser)
-					usernameData.setText("")
+				noConnectionSnackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.dark_gray))
+				noConnectionSnackBar.show()
 
-					val usersList = SaveData(context).users
+				button.isEnabled = true
+			}
+		}
 
-					usersList.add(newUser)
+		fun internetConnection(context: Context): Boolean {
+			val connection = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+			val networkCapabilities = connection.activeNetwork?: return false
+			val activeNetwork = connection.getNetworkCapabilities(networkCapabilities)?: return false
 
-					SaveData(context).users = usersList
-				}
+			return when {
+				activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+				activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+				activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+				else -> false
 			}
 		}
 

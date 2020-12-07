@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.android.synthetic.main.activity_main.*
+import io.github.weltonfelix.githubstars.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import retrofit2.Response
@@ -20,10 +20,13 @@ import retrofit2.Response
  class MainActivity : AppCompatActivity() {
 	 private lateinit var users: MutableList<User>
 	 private lateinit var userAdapter: UserAdapter
+	 private lateinit var binding: ActivityMainBinding
 
 	 override fun onCreate(savedInstanceState: Bundle?) {
 		 super.onCreate(savedInstanceState)
-		 setContentView(R.layout.activity_main)
+		 binding = ActivityMainBinding.inflate(layoutInflater)
+		 val view = binding.root
+		 setContentView(view)
 
 		 users = SaveData(this).users
 		 userAdapter = UserAdapter(users)
@@ -31,7 +34,7 @@ import retrofit2.Response
 		 val addUserButton: Button = findViewById(R.id.search_user_button)
 
 		 addUserButton.setOnClickListener {
-			 val usernameData = search_user
+			 val usernameData = binding.searchUser
 
 			 AddUser(
 				 this,
@@ -43,8 +46,8 @@ import retrofit2.Response
 			 )
 		 }
 
-		 users_list.layoutManager = LinearLayoutManager(this)
-		 users_list.adapter = userAdapter
+		 binding.usersList.layoutManager = LinearLayoutManager(this)
+		 binding.usersList.adapter = userAdapter
 	 }
 
 	open class AddUser() {
@@ -103,7 +106,7 @@ import retrofit2.Response
 			}
 		}
 
-		fun internetConnection(context: Context): Boolean {
+		private fun internetConnection(context: Context): Boolean {
 			val connection = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 			val networkCapabilities = connection.activeNetwork?: return false
 			val activeNetwork = connection.getNetworkCapabilities(networkCapabilities)?: return false

@@ -2,12 +2,12 @@
 
 import android.content.Context
 import android.graphics.Color
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -28,8 +28,12 @@ import retrofit2.Response
 		 val view = binding.root
 		 setContentView(view)
 
+		 supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+		 supportActionBar?.setCustomView(R.layout.action_bar)
+		 supportActionBar?.customView?.findViewById<AppCompatTextView>(R.id.action_bar_title)!!.text = getString(R.string.main_screen_action_bar_title)
+
 		 users = SaveData(this).users
-		 userAdapter = UserAdapter(users)
+		 userAdapter = UserAdapter(users, this)
 
 		 val addUserButton: Button = findViewById(R.id.search_user_button)
 
@@ -66,7 +70,7 @@ import retrofit2.Response
 			snackbar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.primary))
 			snackbar.show()
 
-			if (internetConnection(context)) {
+			if (InternetConnection(context).isConnected()) {
 
 				val userResponse = search(usernameData.text.toString(), snackbar, button)
 
@@ -103,19 +107,6 @@ import retrofit2.Response
 				noConnectionSnackBar.show()
 
 				button.isEnabled = true
-			}
-		}
-
-		private fun internetConnection(context: Context): Boolean {
-			val connection = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-			val networkCapabilities = connection.activeNetwork?: return false
-			val activeNetwork = connection.getNetworkCapabilities(networkCapabilities)?: return false
-
-			return when {
-				activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-				activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-				activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-				else -> false
 			}
 		}
 

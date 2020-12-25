@@ -2,33 +2,15 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:backgroundTint="@color/background_light"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context=".MainActivity"
 	android:id="@+id/main_activity">
 
-	<com.google.android.material.appbar.AppBarLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:theme="@style/Theme.GithubStars.AppBarOverlay">
-
-		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/main_action_bar_title"
-			style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-			android:layout_width="match_parent"
-			android:layout_height="?attr/actionBarSize"
-			android:background="?attr/colorPrimary"
-			android:gravity="center"
-			android:text="@string/main_screen_action_bar_title"
-			android:textAlignment="center"
-			android:textSize="20sp" />
-	</com.google.android.material.appbar.AppBarLayout>
-
 	<androidx.constraintlayout.widget.ConstraintLayout
-
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_marginTop="?attr/actionBarSize"
 		android:padding="30dp">
 
 		<androidx.constraintlayout.widget.ConstraintLayout
@@ -86,7 +68,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:layout_marginTop="80dp"
-			android:scrollbars="vertical"
+			android:scrollbars="none"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"

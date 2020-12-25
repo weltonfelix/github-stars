@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object GithubFactory {
-	const val BASE_URL = "https://api.github.com"
+	private const val BASE_URL = "https://api.github.com"
 
 	fun makeGithubService(): GithubService = Retrofit
 		.Builder()
@@ -12,4 +12,11 @@ object GithubFactory {
 		.addConverterFactory(MoshiConverterFactory.create())
 		.build()
 		.create(GithubService::class.java)
+
+	fun makeReposService(): ReposService = Retrofit
+		.Builder()
+		.baseUrl(BASE_URL)
+		.addConverterFactory(MoshiConverterFactory.create())
+		.build()
+		.create(ReposService::class.java)
 }

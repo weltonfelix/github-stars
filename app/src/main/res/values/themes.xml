@@ -7,17 +7,11 @@
 		<!-- Status bar color. -->
 		<item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
 		<!-- Navigation bar color. -->
-		<item name="android:navigationBarColor">?attr/colorOnPrimary</item>
+		<item name="android:navigationBarColor">@color/background_light</item>
+		<item name="android:windowLightNavigationBar">true</item>
 		<!-- Customize your theme here. -->
 		<item name="colorAccent">@color/primary</item>
 	</style>
 
-	<style name="Theme.GithubStars.NoActionBar">
-		<item name="windowActionBar">false</item>
-		<item name="windowNoTitle">true</item>
-	</style>
-
 	<style name="Theme.GithubStars.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-	<style name="Theme.GithubStars.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
